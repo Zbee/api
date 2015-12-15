@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 
   <head>
@@ -192,7 +191,24 @@
                 </form>
                 <script>
                 $("#usage form").submit(function() {
-                  $(this).find(".error").html("<div class='alert alert-success'>Request submitted.</div><br>")
+                  var json = {
+                    requestName: $("input[name='fname']").val() + "_" + $("input[name='lname']").val(),
+                    email: $("input[name='email']").val(),
+                    github: $("input[name='github']").val()
+                  }
+                  $.ajax({
+                    method: "POST",
+                    url: "manage.php",
+                    data: json,
+                    dataType: "json",
+                    complete: function(res, status) {
+                      if (res.responseJSON.status == "success") {
+                        $("#usage form .error").html("<div class='alert alert-success'>Request submitted.</div><br>")
+                      } else {
+                        $("#usage form .error").html("<div class='alert alert-danger'>" + res.responseJSON.message.charAt(0).toUpperCase() + "</div><br>")
+                      }
+                    }
+                  })
                   return false
                 })
                 </script>
