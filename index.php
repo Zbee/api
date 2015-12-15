@@ -167,6 +167,8 @@
               <p>I tend to be both pretty lazy and much more inclined towards accessing data programattically; so, here is where I will put all of the APIs I make, most of which will simply be a JSON/RSS jab at very simple data.</p>
               <p>The idea behind starting to write and collect my APIs here is wanting to make programs that notified me of grade changes when my school's grading system offered no API, and wanting to share this ability with many others.</p>
               <p>Since I live in Colorado Springs, most of these endpoints will also be centered around me, and this city. However, I do strive to use standards and existing APIs if they are available, so not everything will require you to be me to use. Requests for additional endpoints or additions to what is supported by an endpoint can be made to me <a href="https://keybase.io/zbee">personally</a>.</p>
+              <br>
+              <p>Additionally, all of the APIs here are <a href="https://github.com/zbee/api" target="_blank">open source on GitHub</a>.</p>
             </div>
 
             <div class="well page" id="usage">

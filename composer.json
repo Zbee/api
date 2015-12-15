@@ -1,5 +1,5 @@
 {
-    "require": {
-        "mikehenrty/thin-pdo-wrapper": "^1.0"
-    }
+  "require": {
+    "mikehenrty/thin-pdo-wrapper": "^1.0"
+  }
 }
