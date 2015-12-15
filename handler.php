@@ -2,8 +2,18 @@
 #Specifying that the return is JSON
 header('Content-Type: application/json');
 
+#Include passwords and keys
+require('_secret_keys.php');
+
 #Include functions
 require('functions.php');
+
+#Include database abstraction
+require('vendor/mikehenrty/thin-pdo-wrapper/src/PDOWrapper.php');
+
+#Set up database abstraction
+$pdo = PDOWrapper::instance();
+$pdo->configMaster($db[0], $db[1], $db[2], $db[3]); #setup in _secret_keys.php
 
 #Require a key (private endpoints)
 function requireKey() {
