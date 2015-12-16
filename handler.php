@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 require('_secret_keys.php');
 
 #Include functions
-require('functions.php');
+require('libs/functions.php');
 
 #Include database abstraction
 require('vendor/mikehenrty/thin-pdo-wrapper/src/PDOWrapper.php');
@@ -19,6 +19,7 @@ $pdo->configMaster($db[0], $db[1], $db[2], $db[3]); #setup in _secret_keys.php
 function requireKey() {
   global $argumentsU;
   global $arguments;
+  global $pdo;
   if (!array_key_exists("key", $arguments))
     throw new Exception(
       'Key required to access this private endpoint (arguments: ' . $argumentsU
