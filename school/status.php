@@ -15,7 +15,7 @@ $supported = [
 ];
 
 #Bring in phpQuery
-require('/var/www/api/phpquery.php');
+require('/var/www/api/libs/phpQuery.php');
 
 #Convert all UTF8 characters to HTML entitites
 function handleUTF8 ($code) {
