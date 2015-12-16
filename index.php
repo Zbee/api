@@ -14,10 +14,10 @@
     <meta name="author" content="Ethan Henderson (Zbee)">
 
     <!--Style-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/roboto.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.6/css/bootstrap-material-design.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.6/css/ripples.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
       * {
         box-sizing: border-box;
@@ -128,13 +128,17 @@
       a {
         cursor: pointer;
       }
+
+      td {
+        text-align: left;
+      }
     </style>
 
     <!--Scripts-->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.6/js/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.6/js/ripples.min.js"></script>
     <script>$.material.init()</script>
 
   </head>
@@ -157,6 +161,7 @@
             <li class="active withripple" data-target="#about">About</li>
             <li class="withripple" data-target="#usage">How to Use</li>
             <li class="withripple" data-target="#school">School Endpoints</li>
+            <li class="withripple" data-target="#manage">Manage</li>
           </ul>
         </nav>
         <div class="pages col-xs-9">
@@ -187,14 +192,14 @@
                   <br>
                   <input type="text" class="form-control floating-label" placeholder="GitHub Username" name="github">
                   <br>
-                  <input type="submit" class="btn btn-primary" value="Request Key">
+                  <input type="submit" class="btn btn-raised btn-primary" value="Request Key">
                 </form>
                 <script>
                 $("#usage form").submit(function() {
                   var json = {
-                    requestName: $("input[name='fname']").val() + "_" + $("input[name='lname']").val(),
-                    email: $("input[name='email']").val(),
-                    github: $("input[name='github']").val()
+                    requestName: $("#usage input[name='fname']").val() + "_" + $("#usage input[name='lname']").val(),
+                    email: $("#usage input[name='email']").val(),
+                    github: $("#usage input[name='github']").val()
                   }
                   $.ajax({
                     method: "POST",
@@ -205,7 +210,7 @@
                       if (res.responseJSON.status == "success") {
                         $("#usage form .error").html("<div class='alert alert-success'>Request submitted.</div><br>")
                       } else {
-                        $("#usage form .error").html("<div class='alert alert-danger'>" + res.responseJSON.message.charAt(0).toUpperCase() + "</div><br>")
+                        $("#usage form .error").html("<div class='alert alert-danger'>" + res.responseJSON.message + "</div><br>")
                       }
                     }
                   })
@@ -464,6 +469,82 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+
+            <div class="well page" id="manage">
+              <h1 class="header">Manage</h1>
+              <p>To manage your API access please use the link given to you, or enter your 
+              <div class="row">
+                <form method="post" action="" class="col-xs-6" id="login">
+                  <h2>Log In</h2>
+                  <div class="error"></div>
+                  <input type="email" class="form-control floating-label" placeholder="Email" name="loginEmail">
+                  <br>
+                  <input type="password" class="form-control floating-label" placeholder="Password" name="pass">
+                  <br>
+                  <input type="submit" class="btn btn-raised btn-primary" value="Log in">
+                </form>
+                <script>
+                $("#login").submit(function() {
+                  var json = {
+                    loginEmail: $("input[name='loginEmail']").val(),
+                    pass: $("input[name='pass']").val()
+                  }
+                  $.ajax({
+                    method: "POST",
+                    url: "manage.php",
+                    data: json,
+                    dataType: "json",
+                    complete: function(res, status) {
+                      console.log(res)
+                      if (res.responseJSON.status == "success") {
+                        $("#login .error").html("<div class='alert alert-success'>You are being logged in.</div><br>")
+                        $("#manage").html(res.responseJSON.message)
+                      } else {
+                        $("#login .error").html("<div class='alert alert-danger'>" + res.responseJSON.message + "</div><br>")
+                      }
+                    }
+                  })
+                  return false
+                })
+                </script>
+                <form method="post" action="" class="col-xs-6" id="check">
+                  <h2>Check Request Status</h2>
+                  <div class="error"></div>
+                  <input type="text" class="form-control floating-label" placeholder="First Name" name="fname">
+                  And/or<br>
+                  <input type="text" class="form-control floating-label" placeholder="Last Name" name="lname">
+                  And/or<br>
+                  <input type="email" class="form-control floating-label" placeholder="Email Address" name="email">
+                  And/or<br>
+                  <input type="text" class="form-control floating-label" placeholder="GitHub Username" name="github">
+                  <br>
+                  <input type="submit" class="btn btn-raised btn-primary" value="Check Request">
+                </form>
+                <script>
+                $("#login").submit(function() {
+                  var json = {
+                    checkName: $("#check input[name='fname']").val() + "_" + $("#check input[name='lname']").val(),
+                    email: $("#check input[name='email']").val(),
+                    github: $("#check input[name='github']").val()
+                  }
+                  $.ajax({
+                    method: "POST",
+                    url: "manage.php",
+                    data: json,
+                    dataType: "json",
+                    complete: function(res, status) {
+                      if (res.responseJSON.status == "success") {
+                        $("#login .error").html("<div class='alert alert-success'>You are being logged in.</div><br>")
+                      } else {
+                        $("#login .error").html("<div class='alert alert-danger'>" + res.responseJSON.message + "</div><br>")
+                      }
+                    }
+                  })
+                  return false
+                })
+                </script>
+              </div>
             </div>
           </div>
           <!--<div class="col-xs-2">
