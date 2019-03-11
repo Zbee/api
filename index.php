@@ -592,13 +592,13 @@
           <ul>
             <li>
               Correct Check-In <span class="label">Private</span>
-              <small>{life360 location}/status</small>
+              <small>{life360 location}/correct</small>
             </li>
           </ul>
           <hr>
           <h3>
             Correct Check-In <span class="label">Private</span>
-            <small>{life360 location}/status</small>
+            <small>{life360 location}/correct</small>
           </h3>
           <p>This endpoint is for checking into Swarm when you arrive at
              a location in Life360 using a trigger from IFTTT, to avoid
